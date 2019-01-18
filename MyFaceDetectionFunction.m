@@ -8,31 +8,13 @@ function Coords = MyFaceDetectionFunction(A)
 % Coords: Vector containing the coordinates [x1 y1 x2 y2] of the face/s.
 
 % First Detector Model
-Detect1 = vision.CascadeObjectDetector('FrontalFaceCART','MinSize',[100 100],'MergeThreshold',3,'ScaleFactor' , 1.2);
+Detect1 = vision.CascadeObjectDetector('FrontalFaceCART','MinSize',[100 100],'MergeThreshold',10,'ScaleFactor' , 1.2);
 BoundB = step(Detect1,A);
 
 % Second Detector Model 
 if isempty(BoundB)
-Detect2 = vision.CascadeObjectDetector('FrontalFaceCART','MinSize',[99 99],'MergeThreshold',5,'ScaleFactor' , 1.15);
+Detect2 = vision.CascadeObjectDetector('FrontalFaceCART','MinSize',[99 99],'MergeThreshold',15,'ScaleFactor' , 1.01);
 BoundB = step(Detect2,A);
-end
-
-% Third Detector Model 
-if isempty(BoundB)
-Detect3 = vision.CascadeObjectDetector('FrontalFaceCART','MinSize',[98 98],'MergeThreshold',7,'ScaleFactor' , 1.1);
-BoundB = step(Detect3,A);
-end
-
-% Fourth Detector Model 
-if isempty(BoundB)
-Detect4 = vision.CascadeObjectDetector('FrontalFaceCART','MinSize',[97 97],'MergeThreshold',9,'ScaleFactor' , 1.05);
-BoundB = step(Detect4,A);
-end
-
-% Fifth Detector Model 
-if isempty(BoundB)
-Detect5 = vision.CascadeObjectDetector('FrontalFaceCART','MinSize',[96 96],'MergeThreshold',11,'ScaleFactor' , 1.001);
-BoundB = step(Detect5,A);
 end
      
 % Check if the Bounding Box is a face
@@ -65,7 +47,7 @@ function BoundB = inspection(BoundB,A) % Is there a real face? ...
 
             DetectR=vision.CascadeObjectDetector('RightEyeCART','MinSize',[20 20],'MergeThreshold',4,'UseROI',true);
             DetectL=vision.CascadeObjectDetector('Nose','MinSize',[20 20],'MergeThreshold',7,'UseROI',true);
-                        
+
             if (size(BoundB,1)>1)
                 
                 for i=1:size(BoundB,1)
